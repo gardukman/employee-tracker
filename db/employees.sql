@@ -1,7 +1,7 @@
 CREATE TABLE employee (
     id INTEGER PRIMARY KEY,
     first_name VARCHAR(30),
-    last_name VARCHAR(30),
+    surname VARCHAR(30),
     role_id VARCHAR(30),
     manager_id VARCHAR(30) DEFAULT '' NOT NULL
 );
