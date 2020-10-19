@@ -23,6 +23,7 @@
   "homepage": "https://github.com/gardukman/employee-tracker#readme",
   "dependencies": {
     "express": "^4.17.1",
+    "mysql2": "^2.2.5",
     "sqlite3": "^5.0.0"
   },
   "devDependencies": {
