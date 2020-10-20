@@ -194,3 +194,26 @@ function addDepartment(){
     });
 };
 
+function viewEmps(){
+    connection.query(`SELECT employee.first_name, employee.surname, role.title, department.Dept_Name, role.salary, employee.manager_id FROM employee e INNER JOIN role r ON employee.role_id = role.id INNER JOIN department d ON role.department_id = department.id;`, function (err, res) {;
+    if(err) throw err;
+        console.table(res);
+        view();
+    });
+};
+
+function viewRoles() {
+    connection.query(`SELECT * FROM role `, function(err, res){
+        if (err) throw err;
+        console.table(res);
+        view();
+    });
+};
+
+function viewDepts() {
+    connection.query(`SELECT * FROM department `, function(err, res) {
+        if(err) throw err;
+        console.table(res);
+        view();
+    });
+};
