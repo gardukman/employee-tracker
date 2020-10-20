@@ -154,7 +154,17 @@ function addRole(){
             name: "salary",
             validate: function (value) {
                 let valid = !isNaN(parseFloat(value));
-                return valid || "Enter in a number value.";
+                return valid || "Please enter a number.";
+            },
+            
+        },
+        {
+            type: "input",
+            message: "What is the department ID?",
+            name: "departmentID",
+            validate: function(value) {
+                let valid = !isNaN(parseFloat(value));
+                return valid || "Please enter an number.";
             }
         }
     ];
@@ -215,5 +225,60 @@ function viewDepts() {
         if(err) throw err;
         console.table(res);
         view();
+    });
+};
+
+function update() {
+    let getEmp = [
+        {
+            type: "input",
+            message: "Enter the Employee ID you want to update.",
+            name: "employeeID",
+            validate: function(value) {
+                let valid = !isNaN(parseFloat(value));
+                filter: Number
+            }
+        },
+        {
+            type: "input",
+            message: "Enter the Role ID you want to update.",
+            name: "employeeRole",
+            validate: function(value) {
+                let valid = !isNaN(parseFloat(value));
+                return valid || "Please enter a number.";
+                filter: Number
+            }
+        }
+    ];
+
+    inquirer.prompt(getEmp).then(function(name){
+        connection.query(`UPDATE employee SET role_id = ? WHERE id = ?`, [name.employeeRole, name.employeeID], function(err, result) {
+            if (err) { console.log("We can't find that ID or are running into another problem.") }else
+            console.log("Successfully updated employee ID to " + name.employeeID);
+            startPrompt();
+        });
+    });
+};
+
+function deleteEmployee() {
+    let getEmp = [
+        {
+            type: "input",
+            message: "Please enter the Employee ID you want to delete.",
+            name: "employeeID",
+            validate: function (value) {
+                let valid = !isNaN(parseFloat(value));
+                return valid || "Please enter a number.";
+                filter: Number
+            }
+        }
+    ];
+
+    inquirer.prompt(getEmp).then(function (name) {
+        connection.query(`DELETE FROM employee WHERE id = ?`, name.employeeID, function(err, result) {
+            if(err){console.log("We can't find that ID or are running into another problem.")};
+            console.log("Successfully deleted employee ID of " + name.employeeID);
+            startPrompt();
+        });
     });
 };
