@@ -141,6 +141,37 @@ function addEmployee(){
     });
 };
 
+function addRole(){
+    roleQuestions = [
+        {
+            type: "input",
+            message: "What is the title of the role you'd like to add?",
+            name: "title"
+        },
+        {
+            type: "input",
+            message: "What is the salary for this role?",
+            name: "salary",
+            validate: function (value) {
+                let valid = !isNaN(parseFloat(value));
+                return valid || "Enter in a number value.";
+            }
+        }
+    ];
+    inquirer.prompt(roleQuestions).then(function (addNewRole) {
+        connection.query(`INSERT INTO role SET ?`,
+        {
+            title: addNewRole.title,
+            salary: addNewRole.salary,
+            department_id: addNewRole.deptID
+        },
+        function (err) {
+            if (err) throw err;
+            console.log('Successfully added department.');
+            addMenuPrompt();
+        });
+    });
+};
 
 function addDepartment(){
     let departmentQuestions = [
@@ -162,3 +193,4 @@ function addDepartment(){
         });
     });
 };
+
